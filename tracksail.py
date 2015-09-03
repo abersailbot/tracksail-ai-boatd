@@ -53,7 +53,8 @@ class Tracksail(object):
 
     @sailPosition.setter
     def sailPosition(self, value):
-        self._send_command('set sail {}'.format(int(value)))
+	value_rounded = int(round(value))
+        self._send_command('set sail {}'.format(value_rounded))
 
     @property
     def rudderPosition(self):
@@ -92,3 +93,11 @@ def tracksail_set_rudder(angle):
         tracksail.rudderPosition = -1 * angle
     else:
         tracksail.rudderPosition = 360 - angle
+
+@driver.sail
+def tracksail_set_sail(angle):
+    if angle < 0:
+	tracksail.sailPosition = -1 * angle
+    else:
+	tracksail.sailPosition = 360 - angle
+
